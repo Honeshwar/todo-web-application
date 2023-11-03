@@ -3,7 +3,7 @@ import "./SignIn.scss";
 export default function SignIn() {
   return (
     <div className="signIn">
-      <div className="card">
+      <div className="signInCard">
         <div className="left">
           <h1>To-Do World.</h1>
           <p>
@@ -36,7 +36,7 @@ export default function SignIn() {
                 required
               />
             </div>
-            <div className="btn">
+            <div className="signInBtn">
               <button type="submit">SignIn</button>
             </div>
           </form>

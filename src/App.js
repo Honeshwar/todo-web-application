@@ -7,6 +7,7 @@ import {
   RouterProvider,
   useNavigate,
 } from "react-router-dom";
+import { Footer, Navbar } from "./components";
 
 const Error = () => {
   const navigate = useNavigate();
@@ -28,16 +29,16 @@ export default function App() {
   const Layout = () => {
     return (
       <>
-        {/* <Navbar /> */}
+        <Navbar />
         <Outlet />
-        {/* <Footer /> */}
+        <Footer />
       </>
     );
   };
 
   // create protected route
   const ProtectedRoute1 = ({ children }) => {
-    const user = true;
+    const user = false;
     const navigate = useNavigate();
     useEffect(() => {
       if (!user) {
@@ -47,7 +48,7 @@ export default function App() {
     return children;
   };
   const ProtectedRoute2 = ({ children }) => {
-    const user = true;
+    const user = false;
     const navigate = useNavigate();
     useEffect(() => {
       if (user) {
@@ -64,9 +65,10 @@ export default function App() {
       errorElement: <Error />,
       element: (
         <ProtectedRoute1>
-          <Home />
+          <Layout />
         </ProtectedRoute1>
       ),
+      children: [{ path: "/", element: <Home /> }], ///profile,...
     },
     {
       path: "/signin",

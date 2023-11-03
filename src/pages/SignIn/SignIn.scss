@@ -9,7 +9,7 @@
   background-repeat: no-repeat;
   background-size: 200px;
   background-color: rgb(241, 237, 220);
-  .card {
+  .signInCard {
     display: flex;
     width: 60%;
     max-width: 900px;
@@ -31,10 +31,10 @@
       //   background-position: center;
       padding: 20px 40px;
 
-      gap: 30px;
+      // gap: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      // justify-content: center;
       // align-items:center;
       border-radius: 10px 0 0 10px;
       h1 {
@@ -74,19 +74,18 @@
       flex-direction: column;
       justify-content: center;
       //   align-items: center;
-      gap: 30px;
+      gap: 10px;
       padding: 10px 20px;
       h1 {
         width: 100%;
         font-size: 2rem;
-        margin-left: 20px;
-        text-align: start;
+        text-align: center;
       }
       .loginForm {
         padding-inline: 20px;
         display: flex;
         flex-direction: column;
-        gap: 40px;
+        gap: 30px;
         .inputItems input {
           width: 100%;
           border: none;
@@ -97,14 +96,18 @@
             border-bottom: 2px solid rgb(132, 101, 245);
           }
         }
-        .btn button {
-          background-color: rgb(212, 119, 248);
-          width: 150px;
-          padding: 10px;
-          border: none;
-          color: white;
-          &:hover {
-            background-color: rgb(140, 30, 184);
+        .signInBtn {
+          margin: 0 auto;
+          button {
+            background-color: rgb(212, 119, 248);
+            width: 150px;
+            padding: 10px;
+            border: none;
+            color: white;
+
+            &:hover {
+              background-color: rgb(140, 30, 184);
+            }
           }
         }
       }

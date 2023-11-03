@@ -9,12 +9,12 @@
   background-repeat: no-repeat;
   background-size: 200px;
   background-color: rgb(241, 237, 220);
-  .card {
+  .signUpCard {
     display: flex;
     width: 70%;
     height: 70%;
     max-width: 900px;
-    max-height: 500px;
+    max-height: 600px;
     // min-height: 450px;
     border-radius: 10px;
     // padding: 10px;
@@ -63,31 +63,47 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 30px;
-      padding: 10px 20px;
+      gap: 10px;
+      padding: 30px 20px;
       h1 {
         font-size: 2rem;
-        margin-left: 20px;
+        text-align: center;
       }
       .loginForm {
-        padding-inline: 20px;
+        padding-inline: 0 20px;
         display: flex;
         flex-direction: column;
         gap: 30px;
-        .inputItems input {
-          width: 100%;
-          border: none;
-          border-bottom: 2px solid lightgray;
-          padding: 10px;
+        .inputItems {
+          position: relative;
+          .eyeIcon {
+            position: absolute;
+            top: 14px;
+            right: 10px;
+          }
+          input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid lightgray;
+            padding: 10px;
+            &:focus {
+              outline: none;
+              border-bottom: 2px solid rgb(132, 101, 245);
+            }
+          }
         }
-        .btn button {
-          background-color: rgb(212, 119, 248);
-          width: 150px;
-          padding: 10px;
-          border: none;
-          color: white;
-          &:hover {
-            background-color: rgb(140, 30, 184);
+        .signUpBtn {
+          margin: 0 auto;
+          button {
+            background-color: rgb(212, 119, 248);
+            width: 150px;
+            padding: 10px;
+            border: none;
+            color: white;
+
+            &:hover {
+              background-color: rgb(140, 30, 184);
+            }
           }
         }
       }

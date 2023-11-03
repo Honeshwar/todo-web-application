@@ -80,7 +80,7 @@ export default function Home() {
   ];
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="homepage">
         {/* <div className="todo"> */}
         <div className="top">
@@ -100,7 +100,7 @@ export default function Home() {
         </div>
         {/* </div> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
