@@ -1,0 +1,85 @@
+.homepage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-block: 30px 0px;
+  background: rgb(231, 231, 231);
+  width: 100%;
+  height: calc(100vh - 90px);
+  .top {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    // border: solid;
+    height: 50px;
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      height: 100%;
+      input {
+        height: 100%;
+        width: 450px;
+        border-radius: 5px;
+        padding-left: 10px;
+        border: 2px solid lightgray;
+        &:focus {
+          outline: 2px solid rgb(130, 225, 238);
+        }
+      }
+      button {
+        height: 100%;
+      }
+    }
+  }
+  .bottom {
+    padding-inline: 30px;
+    overflow-y: auto;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    .task {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      background: white;
+      margin-bottom: 10px;
+      padding: 20px;
+      width: 350px;
+      box-shadow: 0 0 5px 1px black;
+      border-radius: 5px;
+      .modal-header input {
+        // height: 200px;
+        width: 17px;
+        height: 17px;
+      }
+      .modal-footer {
+        display: flex;
+        //   justify-content: space-between;
+        gap: 10px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    height: auto;
+    padding-block: 30px;
+    .top form {
+      gap: 10px;
+      input {
+        width: 100%;
+      }
+      button {
+        height: 40px;
+        padding: 5px 10px;
+      }
+    }
+    .bottom {
+      overflow: visible;
+      margin-top: 55px;
+    }
+  }
+}

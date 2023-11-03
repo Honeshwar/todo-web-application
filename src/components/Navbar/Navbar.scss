@@ -1,0 +1,60 @@
+.todo-navbar {
+  height: 55px;
+  background-color: #4848b1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 10px 20px;
+  color: white;
+  h1 {
+    a {
+      text-decoration-line: none;
+      color: white;
+    }
+  }
+  .right {
+    display: flex;
+    gap: 20px;
+    font-family: sans-serif;
+    & :hover {
+      cursor: pointer;
+    }
+    span {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      background-color: rgb(33, 189, 2);
+      padding: 5px 10px;
+    }
+    a {
+      text-decoration-line: none;
+      background-color: rgb(238, 68, 68);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      &:hover {
+        background-color: rgb(238, 48, 48);
+      }
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    h1 {
+      font-size: 1rem;
+    }
+    .right span,
+    .right a {
+      font-size: 0.7rem;
+    }
+  }
+}
+.footer {
+  height: 35px;
+  background-color: #4848b1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  /* padding-block: 5px; */
+  color: white;
+}
