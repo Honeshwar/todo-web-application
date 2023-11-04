@@ -113,10 +113,10 @@ npm start
 
 - SignIn and SignUp pages Screenshots
 
-  ![App Screenshot](https://honeshwar.github.io/todo-web-application/assets/images/1.png)
-  ![App Screenshot](https://honeshwar.github.io/todo-web-application/assets/images/2.png)
+  ![App Screenshot](https://honeshwar.github.io/todo-web-application/src/assets/images/1.png)
+  ![App Screenshot](https://honeshwar.github.io/todo-web-application/src/assets/images/2.png)
 
 - Home page Screenshots
 
-  ![App Screenshot](https://honeshwar.github.io/todo-web-application/assets/images/3.png)
-  ![App Screenshot](https://honeshwar.github.io/todo-web-application/assets/images/4.png)
+  ![App Screenshot](https://honeshwar.github.io/todo-web-application/src/assets/images/3.png)
+  ![App Screenshot](https://honeshwar.github.io/todo-web-application/src/assets/images/4.png)
