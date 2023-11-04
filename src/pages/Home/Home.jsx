@@ -71,7 +71,13 @@ export default function Home() {
 
         <div className="bottom">
           {data?.todo?.map((task, index) => (
-            <Task task={task} index={index} key={task.id} />
+            <Task
+              task={task}
+              index={index}
+              data={data}
+              setData={setData}
+              key={task.id}
+            />
           ))}
           {data?.todo?.length === 0 && (
             <span>Tasks will be display here...</span>

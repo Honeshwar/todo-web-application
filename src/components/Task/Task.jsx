@@ -1,5 +1,16 @@
+import toast from "react-hot-toast";
 import "./Task.scss";
-export default function Task({ task, index }) {
+
+export default function Task({ task, index, data, setData }) {
+  const removeTodoHandler = (todoId) => {
+    //filter out and remove it from data
+    const newTodo = data?.todo?.filter((todo) => todo.id !== todoId);
+    console.log({ ...data, todo: newTodo });
+    setData({ ...data, todo: newTodo });
+    toast.success("Successfuly removed task!", {
+      duration: 3000,
+    });
+  };
   return (
     <div className="task">
       <div className="modal-content">
@@ -18,7 +29,11 @@ export default function Task({ task, index }) {
           >
             Edit
           </button>
-          <button type="button" className="btn btn-danger">
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => removeTodoHandler(task.id)}
+          >
             Remove
           </button>
         </div>
