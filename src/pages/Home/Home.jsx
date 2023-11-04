@@ -4,42 +4,51 @@ import { Navbar, Footer, Task } from "../../components";
 import "./Home.scss";
 
 export default function Home() {
-  const [data, setData] = useState(-1);
-
+  // const [data, setData] = useState(-1);
+  let [user, setUser] = useState(-1);
   useEffect(() => {
-    if (localStorage.getItem("toastShownHome") === null) {
-      toast.success("Successfully SignIN");
-      localStorage.setItem("toastShownHome", "false"); // Set the flag in localStorage
-      localStorage.setItem("toastShownOnSignOut", "true");
-    } else if (localStorage.getItem("toastShownHome") === "false") {
-      localStorage.setItem("toastShownHome", "false"); // Set the flag in localStorage
-      localStorage.setItem("toastShownOnSignOut", "true");
-    } else if (localStorage.getItem("toastShownHome") === "true") {
+    // if (localStorage.getItem("toastShownHome") === null) {
+    //   // toast.success("Successfully SignIN");
+    //   localStorage.setItem("toastShownHome", "false"); // Set the flag in localStorage
+    //   localStorage.setItem("toastShownOnSignOut", "true");
+    // } else
+    if (localStorage.getItem("toastShownHome") === "true") {
       toast.success("Successfully SignIN");
       localStorage.setItem("toastShownHome", "false"); // Set the flag in localStorage
       localStorage.setItem("toastShownOnSignOut", "true");
     }
   }, []);
 
+  const userDATA = JSON.parse(localStorage.getItem("users"));
+  //find user with help of session
+  const session = JSON.parse(localStorage.getItem("userSession"));
   useEffect(() => {
-    if (data === -1) {
-      const userData = localStorage.getItem("users"); //userData
-      const userDATA = JSON.parse(userData);
+    if (user === -1) {
+      let user = userDATA?.find((D) => D.user.id === session.id);
       //separate/ move to last isComplete todo
-      const markedTodo = userDATA?.todo?.filter(
-        (todo) => todo.isComplete === true,
-      );
-      const unMarkedTodo = userDATA?.todo?.filter(
-        (todo) => todo.isComplete === false,
-      );
-
-      setData({ ...userDATA, todo: [...unMarkedTodo, ...markedTodo] });
+      // const markedTodo = user?.todo?.filter(
+      //   (todo) => todo.isCompleted === true,
+      // );
+      // const unMarkedTodo = user?.todo?.filter(
+      //   (todo) => todo.isCompleted === false,
+      // );
+      // user = { ...user, todo: [...unMarkedTodo, ...markedTodo] };
+      console.log("user", user);
+      setUser(user);
+      // setData(userDATA);
     } else {
+      const data = userDATA?.map((D) => {
+        if (D.user.id === session.id) {
+          return user;
+        }
+        return D;
+      });
+      console.log("d", data);
       localStorage.setItem("users", JSON.stringify(data));
     }
-  }, [data]);
+  }, [user]);
 
-  console.log(data);
+  console.log("user out", user);
   // const [todoText, setTodoText] = useState("");
   const inputRef = useRef();
   const submitHandler = (event) => {
@@ -47,19 +56,27 @@ export default function Home() {
     // console.log(inputRef?.current?.value);
     // return;
     //separate/ move to last isComplete todo
-    const markedTodo = data?.todo?.filter((todo) => todo.isComplete === true);
-    const unMarkedTodo = data?.todo?.filter(
-      (todo) => todo.isComplete === false,
-    );
+    // const markedTodo = user?.todo?.filter((todo) => todo.isCompleted === true);
+    // const unMarkedTodo = user?.todo?.filter(
+    //   (todo) => todo.isCompleted === false,
+    // );
+    let findMaxId = 0;
+    user.todo.forEach((todo) => {
+      findMaxId = Math.max(todo.id, findMaxId);
+    });
     const newTodo = {
-      id: data?.todo?.length + 1,
+      id: findMaxId + 1,
       text: inputRef?.current?.value,
-      isComplete: false,
+      isCompleted: false,
     };
-    setData((prevState) => ({
-      ...prevState,
-      todo: [...unMarkedTodo, newTodo, ...markedTodo],
-    }));
+    // user = { ...user, todo: [...unMarkedTodo, newTodo, ...markedTodo] };
+    console.log("user", user);
+    setUser((p) => ({ ...p, todo: [...p.todo, newTodo] }));
+    // setData((prevState) => ({
+    //   ...prevState,
+    //   user,
+    // }));
+    inputRef.current.value = "";
     toast.success("Successfuly added new task!");
   };
   return (
@@ -83,10 +100,10 @@ export default function Home() {
         </div>
 
         <div className="bottom">
-          {data?.todo?.map((task, index) => (
-            <Task task={task} data={data} setData={setData} key={index} />
+          {user?.todo?.map((task, index) => (
+            <Task task={task} user={user} setUser={setUser} key={task.id} />
           ))}
-          {data?.todo?.length === 0 && (
+          {user?.todo?.length === 0 && (
             <span>Tasks will be display here...</span>
           )}
         </div>

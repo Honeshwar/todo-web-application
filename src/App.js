@@ -41,10 +41,10 @@ export default function App() {
     if (Session === null) {
       localStorage.setItem("userSession", false);
     } else if (userSession === -1) {
-      //reload page, local already session ho gaP
-      setUserSession(Session);
+      //reload page, local already session ho ga
+      setUserSession(JSON.parse(localStorage.getItem("userSession")));
     } else {
-      localStorage.setItem("userSession", userSession);
+      localStorage.setItem("userSession", JSON.stringify(userSession));
     }
     //  else if(userSession === true && localStorage.getItem("userSession") === "false" || userSession === false && localStorage.getItem("userSession") === "true"){//when ever useSession change local sessiion change
     //   localStorage.setItem("userSession", userSession);
@@ -67,7 +67,7 @@ export default function App() {
   const ProtectedRoute1 = ({ children }) => {
     const navigate = useNavigate();
     useEffect(() => {
-      if (!userSession) {
+      if (!userSession || userSession === -1) {
         navigate("/signin");
       }
     }, [userSession]);
@@ -76,7 +76,7 @@ export default function App() {
   const ProtectedRoute2 = ({ children }) => {
     const navigate = useNavigate();
     useEffect(() => {
-      if (userSession) {
+      if (userSession && userSession !== -1) {
         navigate("/");
       }
     }, [userSession]);

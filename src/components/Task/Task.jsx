@@ -2,43 +2,43 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 import "./Task.scss";
 
-export default function Task({ task, index, data, setData }) {
+export default function Task({ task, index, user, setUser }) {
   const inputRef = useRef();
   const checkboxRef = useRef();
 
   const removeTodoHandler = (todoId) => {
     //filter out and remove it from data
-    const newTodo = data?.todo?.filter((todo) => todo.id !== todoId);
-    console.log({ ...data, todo: newTodo });
-    setData({ ...data, todo: newTodo });
+    const newTodo = user?.todo?.filter((todo) => todo.id !== todoId);
+    console.log("new user()", { ...user, todo: newTodo });
+    setUser({ ...user, todo: newTodo });
     toast.success("Successfuly removed task!", {
       duration: 3000,
     });
   };
   const todoEditHandler = (todoId) => {
     //filter out and remove it from data
-    const newTodo = data?.todo?.map((todo) => {
+    const newTodo = user?.todo?.map((todo) => {
       if (todo.id === todoId) {
         todo.text = inputRef?.current?.value;
       }
       return todo;
     });
-    console.log({ ...data, todo: newTodo });
-    setData({ ...data, todo: newTodo });
+    console.log({ ...user, todo: newTodo });
+    setUser({ ...user, todo: newTodo });
     toast.success("Successfuly edited task!", {
       duration: 3000,
     });
   };
   const markAsCompletedHandler = (todoId) => {
     //filter out and remove it from data
-    const newTodo = data?.todo?.map((todo) => {
+    const newTodo = user?.todo?.map((todo) => {
       if (todo.id === todoId) {
-        todo.isComplete = !todo.isComplete;
+        todo.isCompleted = !todo.isCompleted;
       }
       return todo;
     });
-    console.log({ ...data, todo: newTodo });
-    setData({ ...data, todo: newTodo });
+    console.log({ ...user, todo: newTodo });
+    setUser({ ...user, todo: newTodo });
     toast.success(
       `Successfuly mark as ${task.isComplete ? "completed" : "UnCompleted"}!`,
       {
@@ -51,17 +51,18 @@ export default function Task({ task, index, data, setData }) {
       <div className="task">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className={`modal-title ${task.isComplete && "disabled"}`}>
+            <h5 className={`modal-title ${task.isCompleted && "disabled"}`}>
               Task
             </h5>
             <input
               type="checkbox"
               title="Mark as complete"
-              onChange={() => markAsCompletedHandler(task.id)}
+              defaultChecked={task.isCompleted}
+              onClick={() => markAsCompletedHandler(task.id)}
             />
           </div>
           <div className="modal-body">
-            <p className={task.isComplete && "disabled"}>{task.text}.</p>
+            <p className={task.isCompleted && "disabled"}>{task.text}.</p>
           </div>
           <div className="modal-footer">
             {/* <!-- Button trigger edit todo modal --> */}
@@ -70,7 +71,7 @@ export default function Task({ task, index, data, setData }) {
               className="btn btn-primary removeTodo"
               data-bs-toggle="modal"
               data-bs-target={`#editTodo-${task.id}`}
-              disabled={task.isComplete}
+              disabled={task.isCompleted}
             >
               Edit
             </button>

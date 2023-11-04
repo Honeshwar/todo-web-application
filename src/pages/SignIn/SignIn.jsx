@@ -5,7 +5,7 @@ import "./SignIn.scss";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function SignIn({ setUserSession }) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   function ShowPassword() {
     var input = document.getElementById("password");
@@ -20,7 +20,7 @@ export default function SignIn({ setUserSession }) {
   useEffect(() => {
     //first setup m
     if (localStorage.getItem("toastShownOnSignOut") === null) {
-      toast.success("Successfully SignOut");
+      // toast.success("Successfully SignOut");
       localStorage.setItem("toastShownOnSignOut", "false");
       localStorage.setItem("toastShownHome", "true"); // Set the flag in localStorage
     } else if (localStorage.getItem("toastShownOnSignOut") === "true")
@@ -31,10 +31,10 @@ export default function SignIn({ setUserSession }) {
   useEffect(() => {
     //data:[{user:{},todo:[]}]
     console.log(data);
-    const data = localStorage.getItem("users");
-    console.log(JSON.parse(data));
+    const data = JSON.parse(localStorage.getItem("users"));
+    console.log(data);
     if (data) {
-      setData(JSON.parse(data));
+      setData(data);
     }
   }, []);
 
@@ -45,18 +45,18 @@ export default function SignIn({ setUserSession }) {
   const submitHandler = (event) => {
     event.preventDefault();
     console.log(data);
-    // const findUserData = data?.find((data) => data.user.userName === userName);
-    if (data?.user?.userName !== userName) {
+    const findUser = data?.find((data) => data.user.userName === userName);
+    if (!findUser) {
       //notification
       toast.error("User with this name does not exist!");
       return;
     }
-    if (data?.user?.password !== password) {
+    if (findUser?.user?.password !== password) {
       toast.error("Invalid userName/Password!");
       // toast notification
       return;
     }
-    setUserSession(true);
+    setUserSession({ id: findUser?.user.id });
   };
 
   return (

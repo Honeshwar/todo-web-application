@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function SignUp() {
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const inputRef = useRef();
   const [visible, setVisible] = useState(false);
@@ -18,16 +18,16 @@ export default function SignUp() {
   useEffect(() => {
     console.log(users);
     const userData = JSON.stringify(users); //for checking for empty
-    if (userData === "{}") {
-      const data = localStorage.getItem("users");
-      console.log(data);
+    if (userData === "[]") {
+      const data = JSON.parse(localStorage.getItem("users"));
+      console.log(data || []);
       if (data) {
-        setUsers(data);
+        setUsers(data || []);
       }
     } else {
       //data
       localStorage.setItem("users", userData);
-      navigate("/signin");
+      // navigate("/signin");
     }
   }, [users]);
 
@@ -53,21 +53,28 @@ export default function SignUp() {
       // toast notification
       return;
     }
-    if (users?.user?.userName === userName) {
+    const find = users?.find(
+      (userData) => userData?.user?.userName === userName,
+    );
+    if (find) {
       //notification
       toast.error(`This UserName:${userName} is already Taken`);
       return;
     }
     const newUser = {
-      id: 1,
+      id: users.length + 1,
       user: {
-        id: 1,
+        id: users.length + 1,
         userName,
         password,
       },
       todo: [],
     };
-    setUsers(newUser);
+    setUsers((p) => [...p, newUser]);
+    toast.success(` ${userName}registered successfully!`, { duration: 2000 });
+    toast.success(` ${userName}, Now go and make yourself signin!`, {
+      duration: 5000,
+    });
   };
   return (
     <div className="signUp">
