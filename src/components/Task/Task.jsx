@@ -85,8 +85,7 @@ export default function Task({ task, index, user, setUser }) {
           </div>
         </div>
       </div>
-      {/* // modal f
-      or each task to edit todo task */}
+      {/* // modal for each task to edit todo task */}
       {/* <!-- Modal --> */}
       <div
         className="modal fade"
@@ -139,12 +138,3 @@ export default function Task({ task, index, user, setUser }) {
     </>
   );
 }
-
-// <div className="left">
-//   <input type="checkbox" />
-// </div>
-// <div className="center">{task.desc}</div>
-// <div className="right">
-//   <button type="button">Edit</button>
-//   <button type="button">Delete</button>
-// </div>

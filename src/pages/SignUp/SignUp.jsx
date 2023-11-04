@@ -6,14 +6,14 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function SignUp() {
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
-  const inputRef = useRef();
   const [visible, setVisible] = useState(false);
-
   //form input
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
+  const inputRef = useRef();
 
   useEffect(() => {
     console.log(users);
@@ -91,9 +91,6 @@ export default function SignUp() {
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
-            {/* <div className="inputItems">
-              <input type="email" name="" id="" placeholder="Email" required />
-            </div> */}
             <div className="inputItems">
               <input
                 type="password"

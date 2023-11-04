@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
 import "./Navbar.scss";
+
 export default function Navbar({setUserSession}) {
   return (
     <div className="todo-navbar">

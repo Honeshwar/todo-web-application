@@ -1,26 +1,18 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import "./SignIn.scss";
 import toast, { Toaster } from "react-hot-toast";
+import "./SignIn.scss";
 
 export default function SignIn({ setUserSession }) {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
-  function ShowPassword() {
-    var input = document.getElementById("password");
+  //form input
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-    if (input.type === "password") {
-      input.type = "text";
-    } else {
-      input.type = "password";
-    }
-    setVisible((ps) => !ps);
-  }
   useEffect(() => {
-    //first setup m
     if (localStorage.getItem("toastShownOnSignOut") === null) {
-      // toast.success("Successfully SignOut");
       localStorage.setItem("toastShownOnSignOut", "false");
       localStorage.setItem("toastShownHome", "true"); // Set the flag in localStorage
     } else if (localStorage.getItem("toastShownOnSignOut") === "true")
@@ -29,25 +21,19 @@ export default function SignIn({ setUserSession }) {
     localStorage.setItem("toastShownHome", "true");
   }, []);
   useEffect(() => {
-    //data:[{user:{},todo:[]}]
-    console.log(data);
     const data = JSON.parse(localStorage.getItem("users"));
-    console.log(data);
     if (data) {
       setData(data);
     }
+    //data:[{user:{},todo:[]}]
   }, []);
 
-  //form input
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-
+  // form submit handler
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(data);
     const findUser = data?.find((data) => data.user.userName === userName);
     if (!findUser) {
-      //notification
+      // toast  toast  toast notification
       toast.error("User with this name does not exist!");
       return;
     }
@@ -58,6 +44,17 @@ export default function SignIn({ setUserSession }) {
     }
     setUserSession({ id: findUser?.user.id });
   };
+  // show password
+  function ShowPassword() {
+    var input = document.getElementById("password");
+
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+    setVisible((ps) => !ps);
+  }
 
   return (
     <div className="signIn">

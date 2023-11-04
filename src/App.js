@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Home, SignIn, SignUp } from "./pages";
-import "./styles.scss";
 import { Toaster } from "react-hot-toast";
+import "./styles.scss";
 
 import {
   createBrowserRouter,
@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import { Footer, Navbar } from "./components";
 
+//Error component
 const Error = () => {
   const navigate = useNavigate();
   //do side effect
@@ -26,17 +27,12 @@ const Error = () => {
     </div>
   );
 };
+
+// App component
 export default function App() {
   //providing login session to user
   const [userSession, setUserSession] = useState(-1);
   useEffect(() => {
-    //only work once to set userSession to local storage when local storage don't have it
-    // if (!userSession && localStorage.getItem("userSession") === "true") {
-    //   setUserSession(true);
-    // } else localStorage.setItem("userSession", userSession);
-    // if(!userSession){//user is signin or not
-    // setUserSession(localStorage.getItem("userSession")); // make it signin
-    // }
     const Session = JSON.parse(localStorage.getItem("userSession"));
     if (Session === null) {
       localStorage.setItem("userSession", false);
@@ -46,9 +42,6 @@ export default function App() {
     } else {
       localStorage.setItem("userSession", JSON.stringify(userSession));
     }
-    //  else if(userSession === true && localStorage.getItem("userSession") === "false" || userSession === false && localStorage.getItem("userSession") === "true"){//when ever useSession change local sessiion change
-    //   localStorage.setItem("userSession", userSession);
-    // }
   }, [userSession]);
 
   //create layout
