@@ -1,14 +1,14 @@
 import "./Task.scss";
-export default function Task({ task }) {
+export default function Task({ task, index }) {
   return (
     <div className="task">
       <div className="modal-content">
         <div className="modal-header">
-          <h5 className="modal-title">Task {task.id}</h5>
+          <h5 className="modal-title">Task {index + 1}</h5>
           <input type="checkbox" />
         </div>
         <div className="modal-body">
-          <p>{task.desc}.</p>
+          <p>{task.text}.</p>
         </div>
         <div className="modal-footer">
           <button

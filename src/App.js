@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Home, SignIn, SignUp } from "./pages";
 import "./styles.scss";
+import { Toaster } from "react-hot-toast";
+
 import {
   createBrowserRouter,
   Outlet,
@@ -25,11 +27,36 @@ const Error = () => {
   );
 };
 export default function App() {
+  //providing login session to user
+  const [userSession, setUserSession] = useState(-1);
+  useEffect(() => {
+    //only work once to set userSession to local storage when local storage don't have it
+    // if (!userSession && localStorage.getItem("userSession") === "true") {
+    //   setUserSession(true);
+    // } else localStorage.setItem("userSession", userSession);
+    // if(!userSession){//user is signin or not
+    // setUserSession(localStorage.getItem("userSession")); // make it signin
+    // }
+    const Session = JSON.parse(localStorage.getItem("userSession"));
+    if (Session === null) {
+      localStorage.setItem("userSession", false);
+    } else if (userSession === -1) {
+      //reload page, local already session ho gaP
+      setUserSession(Session);
+    } else {
+      localStorage.setItem("userSession", userSession);
+    }
+    //  else if(userSession === true && localStorage.getItem("userSession") === "false" || userSession === false && localStorage.getItem("userSession") === "true"){//when ever useSession change local sessiion change
+    //   localStorage.setItem("userSession", userSession);
+    // }
+  }, [userSession]);
+
   //create layout
   const Layout = () => {
     return (
       <>
-        <Navbar />
+        <Toaster />
+        <Navbar setUserSession={setUserSession} />
         <Outlet />
         <Footer />
       </>
@@ -38,23 +65,21 @@ export default function App() {
 
   // create protected route
   const ProtectedRoute1 = ({ children }) => {
-    const user = false;
     const navigate = useNavigate();
     useEffect(() => {
-      if (!user) {
+      if (!userSession) {
         navigate("/signin");
       }
-    }, []);
+    }, [userSession]);
     return children;
   };
   const ProtectedRoute2 = ({ children }) => {
-    const user = false;
     const navigate = useNavigate();
     useEffect(() => {
-      if (user) {
+      if (userSession) {
         navigate("/");
       }
-    }, []);
+    }, [userSession]);
     return children;
   };
 
@@ -74,7 +99,8 @@ export default function App() {
       path: "/signin",
       element: (
         <ProtectedRoute2>
-          <SignIn />
+          <Toaster />
+          <SignIn setUserSession={setUserSession} />
         </ProtectedRoute2>
       ),
     },
@@ -82,6 +108,7 @@ export default function App() {
       path: "/signup",
       element: (
         <ProtectedRoute2>
+          <Toaster />
           <SignUp />
         </ProtectedRoute2>
       ),
