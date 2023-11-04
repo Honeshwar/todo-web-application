@@ -4,6 +4,7 @@ import "./Task.scss";
 
 export default function Task({ task, index, data, setData }) {
   const inputRef = useRef();
+  const checkboxRef = useRef();
 
   const removeTodoHandler = (todoId) => {
     //filter out and remove it from data
@@ -28,24 +29,48 @@ export default function Task({ task, index, data, setData }) {
       duration: 3000,
     });
   };
+  const markAsCompletedHandler = (todoId) => {
+    //filter out and remove it from data
+    const newTodo = data?.todo?.map((todo) => {
+      if (todo.id === todoId) {
+        todo.isComplete = !todo.isComplete;
+      }
+      return todo;
+    });
+    console.log({ ...data, todo: newTodo });
+    setData({ ...data, todo: newTodo });
+    toast.success(
+      `Successfuly mark as ${task.isComplete ? "completed" : "UnCompleted"}!`,
+      {
+        duration: 3000,
+      },
+    );
+  };
   return (
     <>
       <div className="task">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Task {index + 1}</h5>
-            <input type="checkbox" />
+            <h5 className={`modal-title ${task.isComplete && "disabled"}`}>
+              Task
+            </h5>
+            <input
+              type="checkbox"
+              title="Mark as complete"
+              onChange={() => markAsCompletedHandler(task.id)}
+            />
           </div>
           <div className="modal-body">
-            <p>{task.text}.</p>
+            <p className={task.isComplete && "disabled"}>{task.text}.</p>
           </div>
           <div className="modal-footer">
             {/* <!-- Button trigger edit todo modal --> */}
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-primary removeTodo"
               data-bs-toggle="modal"
               data-bs-target={`#editTodo-${task.id}`}
+              disabled={task.isComplete}
             >
               Edit
             </button>

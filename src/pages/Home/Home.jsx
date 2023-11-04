@@ -24,7 +24,16 @@ export default function Home() {
   useEffect(() => {
     if (data === -1) {
       const userData = localStorage.getItem("users"); //userData
-      setData(JSON.parse(userData));
+      const userDATA = JSON.parse(userData);
+      //separate/ move to last isComplete todo
+      const markedTodo = userDATA?.todo?.filter(
+        (todo) => todo.isComplete === true,
+      );
+      const unMarkedTodo = userDATA?.todo?.filter(
+        (todo) => todo.isComplete === false,
+      );
+
+      setData({ ...userDATA, todo: [...unMarkedTodo, ...markedTodo] });
     } else {
       localStorage.setItem("users", JSON.stringify(data));
     }
@@ -37,7 +46,11 @@ export default function Home() {
     event.preventDefault(); //by default submit action remove current clcik k liya
     // console.log(inputRef?.current?.value);
     // return;
-
+    //separate/ move to last isComplete todo
+    const markedTodo = data?.todo?.filter((todo) => todo.isComplete === true);
+    const unMarkedTodo = data?.todo?.filter(
+      (todo) => todo.isComplete === false,
+    );
     const newTodo = {
       id: data?.todo?.length + 1,
       text: inputRef?.current?.value,
@@ -45,7 +58,7 @@ export default function Home() {
     };
     setData((prevState) => ({
       ...prevState,
-      todo: [newTodo, ...prevState.todo],
+      todo: [...unMarkedTodo, newTodo, ...markedTodo],
     }));
     toast.success("Successfuly added new task!");
   };
@@ -71,13 +84,7 @@ export default function Home() {
 
         <div className="bottom">
           {data?.todo?.map((task, index) => (
-            <Task
-              task={task}
-              index={index}
-              data={data}
-              setData={setData}
-              key={task.id}
-            />
+            <Task task={task} data={data} setData={setData} key={index} />
           ))}
           {data?.todo?.length === 0 && (
             <span>Tasks will be display here...</span>
